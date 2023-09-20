@@ -2,6 +2,8 @@
 
 #include <kernel/kernel.h>
 #include <kernel/tty.h>
+#include <arch/i386/idt.h>
+#include <arch/i386/interrupts.h>
 
 void print_logo() {
 	printf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n", " _____                 _           _____ _____ ",
@@ -49,9 +51,8 @@ void print_registers() {
 
 void kernel_main(void) {
 	terminal_initialize();
+	idt_install();
 
 	print_logo();
 	print_nums(INT_MIN, INT_MAX);
-	//print_nums(0, INT_MAX * -1);
-	//print_registers();
 }
