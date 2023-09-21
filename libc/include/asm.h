@@ -1,5 +1,5 @@
-#ifndef _LIBC_ASM_H_
-#define _LIBC_ASM_H_ 1
+#ifndef LIBC_ASM_H
+#define LIBC_ASM_H 1
 
 #include <stdint.h>
 

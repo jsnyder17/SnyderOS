@@ -19,7 +19,7 @@ LIBK_CFLAGS:=$(CFLAGS)
 LIBK_CPPFLAGS:=$(CPPFLAGS) -D__is_libk
  
 ARCHDIR=arch/$(HOSTARCH)
- 
+
 include $(ARCHDIR)/make.config
  
 CFLAGS:=$(CFLAGS) $(ARCH_CFLAGS)

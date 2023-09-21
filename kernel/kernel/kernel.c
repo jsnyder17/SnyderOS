@@ -54,5 +54,6 @@ void kernel_main(void) {
 	idt_install();
 
 	print_logo();
-	print_nums(INT_MIN, INT_MAX);
+	printf("%d\n", 3 / 0);
+	//print_nums(INT_MIN, INT_MAX);
 }

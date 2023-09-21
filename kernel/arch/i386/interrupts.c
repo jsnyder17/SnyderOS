@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+#include <asm.h>
 
 static interrupt_handler_t interrupt_handlers[IDT_NUM_ENTRIES];
 
