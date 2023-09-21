@@ -71,9 +71,9 @@ void terminal_scroll() {
 
 	for (size_t y = 0; y < INT_VGA_HEIGHT - 1; y++) {
 		for (size_t x = 0; x < INT_VGA_WIDTH; x++) {
-			const size_t src_index = y * INT_VGA_WIDTH + x;	// 25 apart each 
-			const size_t dest_index = (y + 1) * INT_VGA_WIDTH + x;
-			terminal_buffer[src_index] = terminal_buffer[dest_index];
+			const size_t dest_index = y * INT_VGA_WIDTH + x;	// 25 apart each 
+			const size_t src_index = (y + 1) * INT_VGA_WIDTH + x;
+			terminal_buffer[dest_index] = terminal_buffer[src_index];
 		}
 	}
 
