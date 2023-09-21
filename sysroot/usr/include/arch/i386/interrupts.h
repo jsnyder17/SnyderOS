@@ -1,5 +1,5 @@
-#ifndef _INTERRUPT_H_
-#define _INTERRUPT_H_
+#ifndef INTERRUPT_H
+#define INTERRUPT_H
 
 #include <stdbool.h>
 #include <stdint.h>

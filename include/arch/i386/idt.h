@@ -1,5 +1,5 @@
-#ifndef _KERNEL_IDT_H_
-#define _KERNEL_IDT_H_
+#ifndef IDT_H
+#define IDT_H
 
 #include <stdint.h>
 

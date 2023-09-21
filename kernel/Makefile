@@ -29,7 +29,7 @@ LIBS:=$(LIBS) $(KERNEL_ARCH_LIBS)
 
 KERNEL_OBJS=\
 $(KERNEL_ARCH_OBJS) \
-kernel/kernel.o \
+kernel/kernel.o \ # og kernel/kernel.o \ (removed kernel directory)
 
 OBJS=\
 $(ARCHDIR)/crti.o \
@@ -74,7 +74,7 @@ install: install-headers install-kernel
 
 install-headers:
 	mkdir -p $(DESTDIR)$(INCLUDEDIR)
-	cp -R --preserve=timestamps ../include $(DESTDIR)$(INCLUDEDIR)
+	cp -R --preserve=timestamps ../include/. $(DESTDIR)$(INCLUDEDIR)/.
 
 install-kernel: myos.kernel
 	mkdir -p $(DESTDIR)$(BOOTDIR)

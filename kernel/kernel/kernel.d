@@ -1,0 +1,11 @@
+kernel/kernel.o: kernel/kernel.c \
+ /home/josh/SnyderOS/sysroot/usr/include/stdio.h \
+ /home/josh/SnyderOS/sysroot/usr/include/sys/cdefs.h \
+ /home/josh/SnyderOS/sysroot/usr/include/kernel/kernel.h \
+ /home/josh/SnyderOS/sysroot/usr/include/arch/i386/tty.h \
+ /home/josh/opt/cross/lib/gcc/i686-elf/12.2.0/include/stddef.h \
+ /home/josh/SnyderOS/sysroot/usr/include/arch/i386/idt.h \
+ /home/josh/opt/cross/lib/gcc/i686-elf/12.2.0/include/stdint.h \
+ /home/josh/opt/cross/lib/gcc/i686-elf/12.2.0/include/stdint-gcc.h \
+ /home/josh/SnyderOS/sysroot/usr/include/arch/i386/interrupts.h \
+ /home/josh/opt/cross/lib/gcc/i686-elf/12.2.0/include/stdbool.h
