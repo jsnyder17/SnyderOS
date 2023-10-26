@@ -13,6 +13,7 @@ void terminal_write(const char *data, size_t size);
 void terminal_writestring(const char *data);
 void terminal_scroll();
 void terminal_backspace();
+void terminal_clear();
 void terminal_enter();
 
 #endif

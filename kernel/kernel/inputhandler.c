@@ -22,6 +22,9 @@ void process_input(const unsigned char *input_str) {
     } else if (!memcmp(command_buffer, STR_CMD_PRINT_LOGO, INT_PRINT_LOGO_CMD_LEN)) {
         print_logo();
 
+    } else if (!memcmp(command_buffer, STR_CMD_CLEAR, INT_CLEAR_CMD_LEN)) {
+        clear();
+
     } else if (!memcmp(command_buffer, STR_CMD_HELP, INT_HELP_CMD_LEN)) {
         help();
 
@@ -78,6 +81,10 @@ void print_logo() {
 							   				   "              __/ |                            ",
 							   				   "             |___/                             ");
 	printf("\t\t\t\t\t\t\t\t\t\t\t\t\t%s\t%s\n", STR_VERSION, STR_AUTHOR);
+}
+
+void clear() {
+    terminal_clear();
 }
 
 void help() {
