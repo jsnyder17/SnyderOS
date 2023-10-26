@@ -19,6 +19,9 @@ void process_input(const unsigned char *input_str) {
     } else if (!memcmp(command_buffer, STR_CMD_REGISTERS, INT_REGISTER_CMD_LEN)) {
         registers();
 
+    } else if (!memcmp(command_buffer, STR_CMD_PRINT_LOGO, INT_PRINT_LOGO_CMD_LEN)) {
+        print_logo();
+
     } else if (!memcmp(command_buffer, STR_CMD_HELP, INT_HELP_CMD_LEN)) {
         help();
 
@@ -63,6 +66,18 @@ void registers() {
     printf("\n$edi: %x", edi);
     printf("\n$ebp: %x", ebp);
     printf("\n$esp: %x", esp);
+}
+
+void print_logo() {
+	printf("\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n", " _____                 _           _____ _____ ",
+							   				   "/  ___|               | |         |  _  /  ___|",
+							   				   "\\ `--. _ __  _   _  __| | ___ _ __| | | \\ `--. ",
+							   				   " `--. \\ '_ \\| | | |/ _` |/ _ \\ '__| | | |`--. \\",
+							   				   "/\\__/ / | | | |_| | (_| |  __/ |  \\ \\_/ /\\__/ /",
+							   				   "\\____/|_| |_|\\__, |\\__,_|\\___|_|   \\___/\\____/ ",
+							   				   "              __/ |                            ",
+							   				   "             |___/                             ");
+	printf("\t\t\t\t\t\t\t\t\t\t\t\t\t%s\t%s\n", STR_VERSION, STR_AUTHOR);
 }
 
 void help() {
