@@ -105,6 +105,18 @@ void terminal_backspace() {
 	update_cursor(terminal_row, terminal_column);
 }
 
+void terminal_clear() {
+	terminal_row = 0;
+	terminal_column = INT_COLUMN_START_INDEX;
+	
+	for (size_t y = 0; y < INT_VGA_HEIGHT; y++) {
+		for (size_t x = 0; x < INT_VGA_WIDTH; x++) {
+			const size_t index = y * INT_VGA_WIDTH + x;	// 25 apart each 
+			terminal_buffer[index] = vga_entry(' ', terminal_color);
+		}
+	}
+}
+
 void terminal_enter() {
 	unsigned char input_str[INT_VGA_WIDTH - INT_COLUMN_START_INDEX];
 
