@@ -55,14 +55,14 @@ void registers() {
     register int *ebp asm("ebp");
     register int *esp asm("esp");
 
-	printf("\n$eax: %d", eax);
-	printf("\n$ebx: %d", ebx);
-	printf("\n$ecx: %d", ecx);
-	printf("\n$edx: %d", edx);
-    printf("\n$esi: %d", esi);
-    printf("\n$edi: %d", edi);
-    printf("\n$ebp: %d", ebp);
-    printf("\n$esp: %d", esp);
+	printf("\n$eax: %x", eax);
+	printf("\n$ebx: %x", ebx);
+	printf("\n$ecx: %x", ecx);
+	printf("\n$edx: %x", edx);
+    printf("\n$esi: %x", esi);
+    printf("\n$edi: %x", edi);
+    printf("\n$ebp: %x", ebp);
+    printf("\n$esp: %x", esp);
 }
 
 void help() {

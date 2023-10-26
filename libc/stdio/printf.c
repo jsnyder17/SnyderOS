@@ -31,6 +31,32 @@ static bool print_int(int data) {
 	return true;
 }
 
+static bool print_hex(int data) {
+	char hex_num[INT_HEX_NUM_DIGITS];
+	int i, j, k, temp;
+	j = 1;
+	k = temp = 0;
+
+	for (i = 0; i < INT_HEX_NUM_DIGITS; i++) {
+		temp = data % 16;
+
+		if (temp < 10) {
+			temp += 48;
+
+		} else {
+			temp = temp + 55;
+		}
+
+		hex_num[j++] = temp;
+		data = data / 16;
+	}
+
+	printf("0x");
+	for (k = j - 1; k > 0; k--) {
+		putchar(hex_num[k]);
+	}
+}
+
 int printf(const char* restrict format, ...) {
 	va_list parameters;
 	va_start(parameters, format);
@@ -94,6 +120,18 @@ int printf(const char* restrict format, ...) {
 
 			written++;
 
+		} else if (*format == 'x') {
+			format++;
+			int i = va_arg(parameters, int);
+			if (!maxrem) {
+				return -1;
+			}
+			if (!print_hex(i)) {
+				return -1;
+			}
+
+			written++;
+			
 		} else {
 			format = format_begun_at;
 			size_t len = strlen(format);
