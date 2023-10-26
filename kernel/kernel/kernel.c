@@ -10,18 +10,6 @@
 #include <kernel/inputhandler.h>
 #include <asm.h>
 
-void print_logo() {
-	printf("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n", " _____                 _           _____ _____ ",
-							   				   "/  ___|               | |         |  _  /  ___|",
-							   				   "\\ `--. _ __  _   _  __| | ___ _ __| | | \\ `--. ",
-							   				   " `--. \\ '_ \\| | | |/ _` |/ _ \\ '__| | | |`--. \\",
-							   				   "/\\__/ / | | | |_| | (_| |  __/ |  \\ \\_/ /\\__/ /",
-							   				   "\\____/|_| |_|\\__, |\\__,_|\\___|_|   \\___/\\____/ ",
-							   				   "              __/ |                            ",
-							   				   "             |___/                             ");
-	printf("\t\t\t\t\t\t\t\t\t\t\t\t\t%s\t%s\n", STR_VERSION, STR_AUTHOR);
-}
-
 void print_nums(int min, int max) {
 	printf("\nPrinting numbers %i through %i ...\n", min, max);
 
