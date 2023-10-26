@@ -5,6 +5,8 @@
 
 #define EOF (-1)
 
+#define INT_HEX_NUM_DIGITS 8
+
 #ifdef __cplusplus
 extern "C" {
 #endif
