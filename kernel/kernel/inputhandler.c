@@ -1,6 +1,8 @@
 #include <kernel/inputhandler.h>
 
 void process_input(const unsigned char *input_str) {
+    manage_hist_buffer(input_str);
+
     // Get the command entered by the user
     unsigned char command_buffer[INT_VGA_WIDTH - INT_INPUT_START_OFFSET];
 
@@ -25,6 +27,9 @@ void process_input(const unsigned char *input_str) {
     } else if (!memcmp(command_buffer, STR_CMD_CLEAR, INT_CLEAR_CMD_LEN)) {
         clear();
 
+    } else if (!memcmp(command_buffer, STR_CMD_HIST, INT_HIST_CMD_LEN)) {
+        history();
+
     } else if (!memcmp(command_buffer, STR_CMD_HELP, INT_HELP_CMD_LEN)) {
         help();
 
@@ -34,6 +39,17 @@ void process_input(const unsigned char *input_str) {
     } else {
         printf("\n%s", STR_ERROR_INVALID_COMMAND);
     }
+}
+
+void manage_hist_buffer(const unsigned char *input_str) {
+    if (hist_buffer_index == INT_HIST_LIMIT) {
+        hist_buffer_index = 0;
+
+    } else {
+        hist_buffer_index++;
+    }
+
+    memcpy(hist_buffer[hist_buffer_index], input_str, INT_VGA_WIDTH - INT_COLUMN_START_INDEX);
 }
 
 void echo(const unsigned char *input_str) {
@@ -85,6 +101,15 @@ void print_logo() {
 
 void clear() {
     terminal_clear();
+}
+
+void history() {
+    printf("\n%s", STR_CMD_HIST_HEADER);
+
+    int i;
+    for (i = 0; i < hist_buffer_index; i++) {
+        printf("\n%s", hist_buffer[i]);
+    }
 }
 
 void help() {
