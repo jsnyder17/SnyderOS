@@ -2,10 +2,10 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
+#include <asm.h>
 
-#include <kernel/tty.h>
-
-#include "vga.h"
+#include <arch/i386/tty.h>
+#include <arch/i386/vga.h>
 
 static uint16_t* const VGA_MEMORY = (uint16_t*) 0xB8000;
 
@@ -50,19 +50,21 @@ void terminal_putchar(char c) {
 
 	if (++terminal_column == INT_VGA_WIDTH || uc == '\n') {
 		terminal_column = 0;
-
+		
 		if (++terminal_row == INT_VGA_HEIGHT) {
 			terminal_scroll();
 		}
 	}
+
+	update_cursor(terminal_row, terminal_column);
 }
 
-void terminal_write(const char* data, size_t size) {
+void terminal_write(const char *data, size_t size) {
 	for (size_t i = 0; i < size; i++)
 		terminal_putchar(data[i]);
 }
 
-void terminal_writestring(const char* data) {
+void terminal_writestring(const char *data) {
 	terminal_write(data, strlen(data));
 }
 
@@ -71,9 +73,9 @@ void terminal_scroll() {
 
 	for (size_t y = 0; y < INT_VGA_HEIGHT - 1; y++) {
 		for (size_t x = 0; x < INT_VGA_WIDTH; x++) {
-			const size_t dest_index = y * INT_VGA_WIDTH + x;	// 25 apart each 
-			const size_t src_index = (y + 1) * INT_VGA_WIDTH + x;
-			terminal_buffer[dest_index] = terminal_buffer[src_index];
+			const size_t src_index = y * INT_VGA_WIDTH + x;	// 25 apart each 
+			const size_t dest_index = (y + 1) * INT_VGA_WIDTH + x;
+			terminal_buffer[src_index] = terminal_buffer[dest_index];
 		}
 	}
 
@@ -81,4 +83,43 @@ void terminal_scroll() {
 		const size_t index = (INT_VGA_HEIGHT - 1) * INT_VGA_WIDTH + x;
 		terminal_buffer[index] = vga_entry(' ', terminal_color);
 	}
+}
+
+void terminal_backspace() {
+	/*
+	if (terminal_column == 2) {
+		terminal_column = INT_VGA_WIDTH - 1;
+		terminal_row--;
+
+	} else {
+		terminal_column--;
+	}
+	*/
+
+	// For now, we will only allow the user to type on one line at a time
+	if (terminal_column != INT_COLUMN_START_INDEX) {
+		terminal_column--;
+	}
+
+	terminal_putentryat(' ', terminal_color, terminal_column, terminal_row);
+	update_cursor(terminal_row, terminal_column);
+}
+
+void terminal_enter() {
+	unsigned char input_str[INT_VGA_WIDTH - INT_COLUMN_START_INDEX];
+
+	// Get the input typed
+	size_t i, j;
+	j = 0;
+	for (i = terminal_column; i >= INT_COLUMN_START_INDEX; i--) {
+		input_str[j] = terminal_buffer[(terminal_row * INT_VGA_WIDTH + terminal_column) - (i - 1)];
+		j++;
+	}
+	input_str[j] = '\0';
+
+	// Handle the command entered by the user
+	process_input(input_str);
+
+	// Print the starting cursor
+	printf(STR_ROW_START);
 }
