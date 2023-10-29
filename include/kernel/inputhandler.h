@@ -43,6 +43,7 @@ void registers();
 void print_logo();
 void clear();
 void history();
+void div_by_zero();
 void help();
 void exit();
 
