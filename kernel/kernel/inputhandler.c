@@ -125,6 +125,13 @@ void history() {
     }
 }
 
+void div_by_zero() {
+	int x = 5;
+	int y = 5;
+	printf("1 / 0 is ... %d\n", 1 / (x - y));	// bypasses crash somehow??? runtime generated 0
+	//__asm__ volatile("div %0" :: "r"(0));
+}
+
 void help() {
     printf("\n%s", STR_CMD_HELP_OUTPUT);
 }
