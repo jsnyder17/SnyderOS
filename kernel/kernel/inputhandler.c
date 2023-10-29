@@ -42,14 +42,27 @@ void process_input(const unsigned char *input_str) {
 }
 
 void manage_hist_buffer(const unsigned char *input_str) {
-    if (hist_buffer_index == INT_HIST_LIMIT) {
-        hist_buffer_index = 0;
-
-    } else {
-        hist_buffer_index++;
+    int i, not_empty;
+    i = not_empty = 0;
+    char curr_char = 0x00;
+    while ((curr_char = input_str[i]) != '\0') {
+        if (curr_char != ' ') {
+            not_empty = 1;
+            break;
+        }
+        i++;
     }
 
-    memcpy(hist_buffer[hist_buffer_index], input_str, INT_VGA_WIDTH - INT_COLUMN_START_INDEX);
+    if (not_empty) {
+        if (hist_buffer_index == INT_HIST_LIMIT) {
+            hist_buffer_index = 0;
+
+        } else {
+            hist_buffer_index++;
+        }
+
+        memcpy(hist_buffer[hist_buffer_index], input_str, INT_VGA_WIDTH - INT_COLUMN_START_INDEX);
+    }
 }
 
 void echo(const unsigned char *input_str) {
