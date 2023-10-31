@@ -137,6 +137,5 @@ void help() {
 }
 
 void exit() {
-    outw(0x604, 0x2000);    // Shutdown apparently?
-    printf("\nSorry, but for some reason this doesn't work yet. Just force close QEMU");
+    outw(0x604, 0x2000);
 }
