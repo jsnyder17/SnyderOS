@@ -6,6 +6,7 @@
 
 #include <arch/i386/tty.h>
 #include <arch/i386/vga.h>
+#include <kernel/inputhandler.h>
 
 static uint16_t* const VGA_MEMORY = (uint16_t*) 0xB8000;
 

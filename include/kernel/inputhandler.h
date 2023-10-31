@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stddef.h>
+#include <string.h>
 #include <arch/i386/vga.h>
 #include <kernel/kernel.h>
 #include <arch/i386/tty.h>
