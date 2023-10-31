@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stddef.h>
+#include <string.h>
 #include <arch/i386/vga.h>
 #include <kernel/kernel.h>
 #include <arch/i386/tty.h>
@@ -43,6 +44,7 @@ void registers();
 void print_logo();
 void clear();
 void history();
+void div_by_zero();
 void help();
 void exit();
 
