@@ -14,6 +14,10 @@ inline uint8_t inb(uint16_t port) {
     return ret;
 }
 
+inline void outw(uint16_t port, uint16_t val) {
+    asm volatile("outw %0, %1" : : "a"(val), "Nd"(port));
+}
+
 inline void enable_interrupts(void) { 
     asm volatile("sti"); 
     printf("Enabled interrupts!\n");
