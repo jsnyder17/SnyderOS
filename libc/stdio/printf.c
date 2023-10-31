@@ -55,6 +55,8 @@ static bool print_hex(int data) {
 	for (k = j - 1; k > 0; k--) {
 		putchar(hex_num[k]);
 	}
+
+	return true;
 }
 
 int printf(const char* restrict format, ...) {
@@ -130,7 +132,7 @@ int printf(const char* restrict format, ...) {
 				return -1;
 			}
 
-			written++;
+			written += INT_HEX_NUM_DIGITS;
 			
 		} else {
 			format = format_begun_at;
