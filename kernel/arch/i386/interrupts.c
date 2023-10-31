@@ -41,8 +41,14 @@ bool register_interrupt_handler(uint32_t idt_index, interrupt_handler_t handler)
     return true;
 }
 
-void fault_handler(int idt_index) {
-    printf("%s %s. %s\n", exception_msgs[idt_index], STR_EXCEPTION, STR_SYSTEM_HALTED);
+void fault_handler(int idt_index, struct regs *r) {
+    printf("(%x) %s %s. %s", idt_index, exception_msgs[idt_index], STR_EXCEPTION, STR_SYSTEM_HALTED);
+    printf("\n$eax: %x", r->eax);
+    printf("\n$ebx: %x", r->ebx);
+    printf("\n$ecx: %x", r->ecx);
+    printf("\n$edx: %x", r->edx);
+    printf("\n$esp: %x", r->esp);
+
     for(;;);
 }
 
@@ -64,7 +70,7 @@ void run_irq_handler(struct regs *r) {
 void run_interrupt_handler(struct regs *r) {
     size_t idt_index = r->idt_index;
     if (idt_index < 32) {
-        fault_handler(idt_index);
+        fault_handler(idt_index, r);
         return;
     }
 
