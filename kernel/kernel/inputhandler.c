@@ -30,6 +30,9 @@ void process_input(const unsigned char *input_str) {
     } else if (!memcmp(command_buffer, STR_CMD_HIST, INT_HIST_CMD_LEN)) {
         history();
 
+    } else if (!memcmp(command_buffer, STR_CMD_PRINT_HEX, INT_PRINT_HEX_CMD_LEN)) {
+        print_hex(input_str);
+
     } else if (!memcmp(command_buffer, STR_CMD_HELP, INT_HELP_CMD_LEN)) {
         help();
 
@@ -44,7 +47,7 @@ void process_input(const unsigned char *input_str) {
 void manage_hist_buffer(const unsigned char *input_str) {
     int i, not_empty;
     i = not_empty = 0;
-    char curr_char = 0x00;
+    unsigned char curr_char = 0x00;
     while ((curr_char = input_str[i]) != '\0') {
         if (curr_char != ' ') {
             not_empty = 1;
@@ -65,19 +68,21 @@ void manage_hist_buffer(const unsigned char *input_str) {
     }
 }
 
-void echo(const unsigned char *input_str) {
-    // Get the argument from the command
-    unsigned char arg_buffer[INT_VGA_WIDTH - INT_ECHO_CMD_OFFSET];
+void get_arg(const unsigned char *input_str, int offset) {
+    memset(arg, 0x00, INT_ARG_LEN);
 
-    unsigned char curr_char = 0x00;
+    unsigned char curr_char;
     size_t i = 0;
-    while ((curr_char = input_str[i + INT_ECHO_CMD_OFFSET]) != '\0') {
-        arg_buffer[i] = curr_char;
+    while ((curr_char = input_str[i + offset]) != '\0') {
+        arg[i] = curr_char;
         i++;
     }
-    arg_buffer[i] = '\0';
+    arg[i] = '\0';
+}
 
-    printf("\n%s", arg_buffer);
+void echo(const unsigned char *input_str) {
+    get_arg(input_str, INT_ECHO_CMD_OFFSET);
+    printf("\n%s", arg);
 }
 
 void registers() {
@@ -123,6 +128,12 @@ void history() {
     for (i = 0; i < hist_buffer_index; i++) {
         printf("\n%s", hist_buffer[i]);
     }
+}
+
+void print_hex(const unsigned char *input_str) {
+    get_arg(input_str, INT_PRINT_HEX_CMD_OFFSET);
+    int int_arg = atoi(arg);
+    printf("\n%d -> %x", int_arg, int_arg);
 }
 
 void div_by_zero() {
