@@ -135,11 +135,11 @@ void keyboard_handler(struct regs *r) {
                 break;
             
             case 58:    // caps lock
-                keyboard_state.caps_lock = ~keyboard_state.caps_lock;
+                keyboard_state.caps_lock ^= 1;
                 break;
 
             default:
-                column = keyboard_state.shift_held * 1 + keyboard_state.caps_lock * 2;
+                column = keyboard_state.shift_held * 1 + keyboard_state.caps_lock << 1;
                 clicked = kbdus[scan_code][column];
                 if (clicked != 0 && clicked != 27) {
                     terminal_putchar(clicked);
