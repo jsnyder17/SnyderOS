@@ -34,7 +34,7 @@ static bool print_int(int data) {
 static bool print_hex(int data) {
 	char hex_num[INT_HEX_NUM_DIGITS];
 	int i, j, k, temp;
-	j = 1;
+	j = 0;
 	k = temp = 0;
 
 	for (i = 0; i < INT_HEX_NUM_DIGITS; i++) {
@@ -52,12 +52,41 @@ static bool print_hex(int data) {
 	}
 
 	printf("0x");
-	for (k = j - 1; k > 0; k--) {
+	for (k = j - 1; k >= 0; k--) {
 		putchar(hex_num[k]);
 	}
 
 	return true;
 }
+
+/*
+static bool print_hex(int data) {
+	char hex_num[INT_HEX_NUM_DIGITS];
+	int i, j, temp;
+	i = 1;
+
+	while (data != 0) {
+		temp = data % 16;
+
+		if (temp < 10) {
+			temp = temp + 48;
+
+		} else {
+			temp = temp + 55;
+		}
+
+		hex_num[i++] = temp;
+		data = data / 16;
+	}
+
+	printf("0x");
+	for (j = i - 1; j >= 0; j--) {
+		putchar(hex_num[j]);
+	}
+
+	return true;
+}
+*/
 
 int printf(const char* restrict format, ...) {
 	va_list parameters;
