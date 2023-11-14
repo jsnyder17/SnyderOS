@@ -1,5 +1,4 @@
 #include <libk/paging.h>
-#include <libk/phys_mem.h>
 #include <libk/virt_mem.h>
 #include <stdio.h>
 #include <string.h>

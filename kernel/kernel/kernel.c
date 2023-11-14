@@ -10,9 +10,6 @@
 #include <kernel/keyboard.h>
 #include <kernel/timer.h>
 #include <external/multiboot.h>
-#include <libk/heap.h>
-#include <libk/phys_mem.h>
-#include <libk/virt_mem.h>
 
 void kernel_early(struct multiboot_info* mb) {
 	terminal_initialize();

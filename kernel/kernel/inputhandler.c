@@ -33,6 +33,9 @@ void process_input(const unsigned char *input_str) {
     } else if (!memcmp(command_buffer, STR_CMD_PRINT_HEX, INT_PRINT_HEX_CMD_LEN)) {
         print_hex(input_str);
 
+    } else if (!memcmp(command_buffer, STR_CMD_TEST_DYNAMIC_ALLOCATION, INT_TEST_DYNAMIC_CMD_LEN)) {
+        test_dynamic_allocation();
+
     } else if (!memcmp(command_buffer, STR_CMD_HELP, INT_HELP_CMD_LEN)) {
         help();
 
@@ -68,8 +71,8 @@ void manage_hist_buffer(const unsigned char *input_str) {
     }
 }
 
-void get_arg(const unsigned char *input_str, int offset) {
-    memset(arg, 0x00, INT_ARG_LEN);
+char* get_arg(const unsigned char *input_str, int offset) {
+    char *arg = (char*) kmalloc(sizeof(char*) * 256);
 
     unsigned char curr_char;
     size_t i = 0;
@@ -78,11 +81,14 @@ void get_arg(const unsigned char *input_str, int offset) {
         i++;
     }
     arg[i] = '\0';
+
+    return arg;
 }
 
 void echo(const unsigned char *input_str) {
-    get_arg(input_str, INT_ECHO_CMD_OFFSET);
+    char *arg = (char*) get_arg(input_str, INT_ECHO_CMD_OFFSET);
     printf("\n%s", arg);
+    kfree(arg);
 }
 
 void registers() {
@@ -131,9 +137,27 @@ void history() {
 }
 
 void print_hex(const unsigned char *input_str) {
-    get_arg(input_str, INT_PRINT_HEX_CMD_OFFSET);
+    char *arg = (char*) get_arg(input_str, INT_PRINT_HEX_CMD_OFFSET);
     int int_arg = atoi(arg);
     printf("\n%d -> %x", int_arg, int_arg);
+    kfree(arg);
+}
+
+char* get_test_str() {
+    char *str = (char*) kmalloc(sizeof(char*) * 4);
+    str[0] = 'a';
+    str[1] = 'b';
+    str[2] = 'c';
+    str[3] = '\0';
+
+    return str;
+}
+
+void test_dynamic_allocation() {
+    char *str = get_test_str();
+    printf("\nDynamically allocated string: %s", str);
+    printf("\n*str: %x", &str);
+    kfree(str);
 }
 
 void div_by_zero() {

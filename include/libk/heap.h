@@ -2,7 +2,6 @@
 #define _LIBK_HEAP_H
 
 #include <libk/memlayout.h>
-#include <libk/virt_mem.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>

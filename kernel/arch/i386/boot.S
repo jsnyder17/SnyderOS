@@ -47,12 +47,12 @@ _start:
 	mov %ecx, %cr3			# ebx has the address of the page directory
 
 	mov %cr4, %ecx			# Read current cr4
-	or $0x00000010, %ecx		# Set PSE
+	or $0x00000010, %ecx	# Set PSE
 	mov %ecx, %cr4			# Update cr4
 	mov %cr0, %ecx			# Read current cr0
-	or $0x80000000, %ecx		# Set PG
+	or $0x80000000, %ecx	# Set PG
 	mov %ecx, %cr0			# Update cr0
-
+ 
 	# Transfer control to the main kernel.
 	movl $_higher_half, %ecx	# Load the address of the label in ebx
 	jmp %ecx					# Jump to the label
@@ -63,7 +63,7 @@ _higher_half:
 	# Unmap the identity-mapped first 4MB of physcial address space
 	invlpg (0)
 
-	# Enter protection mode
+	# Enter protected mode
 	mov %cr0, %eax
 	or $0x00000001, %al
 	mov %eax, %cr0

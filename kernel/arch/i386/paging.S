@@ -2,15 +2,15 @@
 enable_paging:
     # Move directory into CR3
     mov 4(%esp), %eax
-    mov %cr3, %eax
+    mov %eax, %cr3
 
     # Disable 4MB pages
-    mov %ecx, %cr4
-    and %ecx, ~0x00000010
     mov %cr4, %ecx
+    and $~0x00000010, %ecx
+    mov %ecx, %cr4
     
     # Enable paging
-    mov %eax, %cr0
-    or %eax, 0x80000000
     mov %cr0, %eax
+    or $0x80000000, %eax
+    mov %eax, %cr0
     ret

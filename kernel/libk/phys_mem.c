@@ -161,7 +161,6 @@ void phys_memory_init(struct multiboot_info* mb) {
   used_blocks_ = total_blocks_;
   phys_memory_map_ = (uint32_t*)KERNEL_END_PADDR;
   memset(phys_memory_map_, 0xFF, total_blocks_ / PHYS_BLOCKS_PER_BYTE);
-  printf("Total blocks: %ld\n", total_blocks_);
 
   // Frees memory GRUB considers available
   free_available_memory(mb);
@@ -174,8 +173,9 @@ void phys_memory_init(struct multiboot_info* mb) {
   kernel_phys_map_start = (uint32_t)phys_memory_map_;
   kernel_phys_map_end =
       kernel_phys_map_start + (total_blocks_ / PHYS_BLOCKS_PER_BYTE);
-  printf("PhysMem Manager installed. Mem Map start: %lx, end: %lx\n",
+  printf("Phys memory manager installed. start: %x, end: %x\n",
          kernel_phys_map_start, kernel_phys_map_end);
+  printf("Total blocks: %d\n", total_blocks_);
 }
 
 void update_map_addr(physical_addr addr) { phys_memory_map_ = (uint32_t*)addr; }
