@@ -86,7 +86,7 @@ char* get_arg(const unsigned char *input_str, int offset) {
 }
 
 void echo(const unsigned char *input_str) {
-    char *arg = (char*) get_arg(input_str, INT_ECHO_CMD_OFFSET);
+    char *arg = get_arg(input_str, INT_ECHO_CMD_OFFSET);
     printf("\n%s", arg);
     kfree(arg);
 }
@@ -137,7 +137,7 @@ void history() {
 }
 
 void print_hex(const unsigned char *input_str) {
-    char *arg = (char*) get_arg(input_str, INT_PRINT_HEX_CMD_OFFSET);
+    char *arg = get_arg(input_str, INT_PRINT_HEX_CMD_OFFSET);
     int int_arg = atoi(arg);
     printf("\n%d -> %x", int_arg, int_arg);
     kfree(arg);
