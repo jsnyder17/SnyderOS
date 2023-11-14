@@ -18,44 +18,24 @@ CPPFLAGS:=$(CPPFLAGS) -D__is_kernel -Iinclude
 LDFLAGS:=$(LDFLAGS)
 LIBS:=$(LIBS) -nostdlib -lk -lgcc
 
-ARCHDIR=arch/$(HOSTARCH)
+KERNELDIR:=kernel/
+include $(KERNELDIR)/make.config
 
+ARCHDIR:=arch/$(HOSTARCH)
 include $(ARCHDIR)/make.config
+
+LIBKDIR:=libk/
+include $(LIBKDIR)/make.config
 
 CFLAGS:=$(CFLAGS) $(KERNEL_ARCH_CFLAGS)
 CPPFLAGS:=$(CPPFLAGS) $(KERNEL_ARCH_CPPFLAGS)
 LDFLAGS:=$(LDFLAGS) $(KERNEL_ARCH_LDFLAGS)
 LIBS:=$(LIBS) $(KERNEL_ARCH_LIBS)
 
-#KERNEL_OBJS=\
-$(KERNEL_ARCH_OBJS) \
-kernel/kernel.o \ # og kernel/kernel.o \ (removed kernel directory)
-
-#OBJS=\
-$(ARCHDIR)/crti.o \
-$(ARCHDIR)/crtbegin.o \
-$(KERNEL_OBJS) \
-$(ARCHDIR)/crtend.o \
-$(ARCHDIR)/crtn.o \
-
-#LINK_LIST=\
-$(LDFLAGS) \
-$(ARCHDIR)/crti.o \
-$(ARCHDIR)/crtbegin.o \
-$(KERNEL_OBJS) \
-$(LIBS) \
-$(ARCHDIR)/crtend.o \
-$(ARCHDIR)/crtn.o \
-
 OBJS:=\
 $(KERNEL_ARCH_OBJS) \
 $(LIBK_OBJS) \
-$(DEVICES_OBJS) \
-$(TEST_OBJS) \
-kernel/kernel.o \
-kernel/timer.o \
-kernel/keyboard.o \
-kernel/inputhandler.o \
+$(KERNEL_OBJS)
 
 CRTI_OBJ:=$(ARCHDIR)/crti.o
 CRTBEGIN_OBJ:=$(shell $(CC) $(CFLAGS) $(LDFLAGS) -print-file-name=crtbegin.o)
@@ -79,15 +59,8 @@ $(CRTN_OBJ) \
 
 all: myos.kernel
 
-#myos.kernel: $(OBJS) $(ARCHDIR)/linker.ld
-#	$(CC) -T $(ARCHDIR)/linker.ld -o $@ $(CFLAGS) $(LINK_LIST)
-#	grub-file --is-x86-multiboot myos.kernel
-
 myos.kernel: $(OBJ_LINK_LIST) $(ARCHDIR)/linker.ld
 	$(CC) -T $(ARCHDIR)/linker.ld -o $@ $(CFLAGS) $(OBJ_LINK_LIST) $(LDFLAGS) $(LIBS)
-
-#$(ARCHDIR)/crtbegin.o $(ARCHDIR)/crtend.o:
-#	OBJ=`$(CC) $(CFLAGS) $(LDFLAGS) -print-file-name=$(@F)` && cp "$$OBJ" $@
 
 .c.o:
 	$(CC) -MD -c $< -o $@ -std=gnu11 $(CFLAGS) $(CPPFLAGS)
@@ -104,7 +77,7 @@ install: install-headers install-kernel
 
 install-headers:
 	mkdir -p $(DESTDIR)$(INCLUDEDIR)
-	cp -R --preserve=timestamps ../include/. $(DESTDIR)$(INCLUDEDIR)/.
+	cp -R --preserve=timestamps ../include/. $(DESTDIR)$(INCLUDEDIR)
 
 install-kernel: myos.kernel
 	mkdir -p $(DESTDIR)$(BOOTDIR)

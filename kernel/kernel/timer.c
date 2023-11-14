@@ -1,4 +1,5 @@
 #include <arch/i386/interrupts.h>
+#include <arch/i386/idt.h>
 #include <kernel/timer.h>
 #include <asm.h>
 #include <stdio.h>

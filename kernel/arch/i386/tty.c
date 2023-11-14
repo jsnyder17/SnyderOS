@@ -4,7 +4,6 @@
 #include <string.h>
 #include <asm.h>
 
-#include <arch/i386/tty.h>
 #include <arch/i386/vga.h>
 #include <kernel/inputhandler.h>
 

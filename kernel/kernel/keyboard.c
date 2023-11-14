@@ -1,4 +1,5 @@
 #include <arch/i386/interrupts.h>
+#include <arch/i386/idt.h>
 #include <arch/i386/tty.h>
 #include <kernel/keyboard.h>
 #include <stdint.h>
