@@ -63,7 +63,7 @@ _higher_half:
 	# Unmap the identity-mapped first 4MB of physcial address space
 	invlpg (0)
 
-	# Enter protected mode
+	# Enter protected mode so we have access to more memory
 	mov %cr0, %eax
 	or $0x00000001, %al
 	mov %eax, %cr0

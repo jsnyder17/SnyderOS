@@ -2,6 +2,7 @@
 #define _LIBK_PHYS_MEM_H
 
 #include <libk/memlayout.h>
+#include <external/multiboot.h>
 #include <stdbool.h>
 #include <stdint.h>
 

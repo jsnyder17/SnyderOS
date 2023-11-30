@@ -10,7 +10,7 @@ extern "C" {
 __attribute__((__noreturn__))
 void abort(void);
 
-int atoi(const unsigned char *str);
+int atoi(const char *str);
 
 #ifdef __cplusplus
 }

@@ -1,12 +1,12 @@
 #include <kernel/inputhandler.h>
 
-void process_input(const unsigned char *input_str) {
+void process_input(const char *input_str) {
     manage_hist_buffer(input_str);
 
     // Get the command entered by the user
-    unsigned char command_buffer[INT_VGA_WIDTH - INT_INPUT_START_OFFSET];
+    char command_buffer[INT_VGA_WIDTH - INT_INPUT_START_OFFSET];
 
-    unsigned char curr_char = 0x00;
+    char curr_char = 0x00;
     size_t i = 0;
     while (((curr_char = input_str[i + 1]) != ' ') && curr_char != '\0') {
         command_buffer[i] = curr_char;
@@ -47,10 +47,10 @@ void process_input(const unsigned char *input_str) {
     }
 }
 
-void manage_hist_buffer(const unsigned char *input_str) {
+void manage_hist_buffer(const char *input_str) {
     int i, not_empty;
     i = not_empty = 0;
-    unsigned char curr_char = 0x00;
+    char curr_char = 0x00;
     while ((curr_char = input_str[i]) != '\0') {
         if (curr_char != ' ') {
             not_empty = 1;
@@ -71,10 +71,10 @@ void manage_hist_buffer(const unsigned char *input_str) {
     }
 }
 
-char* get_arg(const unsigned char *input_str, int offset) {
-    char *arg = (char*) kmalloc(sizeof(char*) * 256);
+char* get_arg(const char *input_str, int offset) {
+    char *arg = (char*) kmalloc(sizeof(char*) * INT_ARG_LEN);
 
-    unsigned char curr_char;
+    char curr_char;
     size_t i = 0;
     while ((curr_char = input_str[i + offset]) != '\0') {
         arg[i] = curr_char;
@@ -85,30 +85,32 @@ char* get_arg(const unsigned char *input_str, int offset) {
     return arg;
 }
 
-void echo(const unsigned char *input_str) {
+void echo(const char *input_str) {
     char *arg = get_arg(input_str, INT_ECHO_CMD_OFFSET);
     printf("\n%s", arg);
     kfree(arg);
 }
 
 void registers() {
-    register int *eax asm("eax");
-	register int *ebx asm("ebx");
-	register int *ecx asm("ecx");
-	register int *edx asm("edx"); 
-    register int *esi asm("esi");
-    register int *edi asm("edi");
-    register int *ebp asm("ebp");
-    register int *esp asm("esp");
+    //__asm__ volatile("mov $1, %eax\n\tmov $2, %ebx\n\tmov $3, %ecx\n\tmov $4, %edx");
 
-	printf("\n$eax: %x", eax);
-	printf("\n$ebx: %x", ebx);
-	printf("\n$ecx: %x", ecx);
-	printf("\n$edx: %x", edx);
-    printf("\n$esi: %x", esi);
-    printf("\n$edi: %x", edi);
-    printf("\n$ebp: %x", ebp);
-    printf("\n$esp: %x", esp);
+    register int *eax __asm__ ("%eax");
+	register int *ebx __asm__ ("%ebx");
+	register int *ecx __asm__ ("%ecx");
+	register int *edx __asm__ ("%edx"); 
+    register int *esi __asm__ ("%esi");
+    register int *edi __asm__ ("%edi");
+    register int *ebp __asm__ ("%ebp");
+    register int *esp __asm__ ("%esp");
+
+	printf("\n$eax: %x -> %d", eax, eax);
+	printf("\n$ebx: %x -> %d", ebx, ebx);
+	printf("\n$ecx: %x -> %d", ecx, ecx);
+	printf("\n$edx: %x -> %d", edx, edx);
+    printf("\n$esi: %x -> %d", esi, esi);
+    printf("\n$edi: %x -> %d", edi, edi);
+    printf("\n$ebp: %x -> %d", ebp, ebp);
+    printf("\n$esp: %x -> %d", esp, esp);
 }
 
 void print_logo() {
@@ -136,7 +138,7 @@ void history() {
     }
 }
 
-void print_hex(const unsigned char *input_str) {
+void print_hex(const char *input_str) {
     char *arg = get_arg(input_str, INT_PRINT_HEX_CMD_OFFSET);
     int int_arg = atoi(arg);
     printf("\n%d -> %x", int_arg, int_arg);
@@ -156,7 +158,7 @@ char* get_test_str() {
 void test_dynamic_allocation() {
     char *str = get_test_str();
     printf("\nDynamically allocated string: %s", str);
-    printf("\n*str: %x", &str);
+    printf("\n&str: %x", &str);
     kfree(str);
 }
 

@@ -45,16 +45,16 @@ static unsigned char hist_buffer[INT_HIST_LIMIT][INT_VGA_WIDTH - INT_COLUMN_STAR
 //static unsigned char arg[INT_ARG_LEN];
 static int hist_buffer_index = 0;
 
-void process_input(const unsigned char *input_str);
-void manage_hist_buffer(const unsigned char *input_str);
+void process_input(const char *input_str);
+void manage_hist_buffer(const char *input_str);
 char* get_arg(input_str);
 
-void echo(const unsigned char *input_str);
+void echo(const char *input_str);
 void registers();
 void print_logo();
 void clear();
 void history();
-void print_hex(const unsigned char *input_str);
+void print_hex(const char *input_str);
 void test_dynamic_allocation();
 void div_by_zero();
 void help();

@@ -16,14 +16,17 @@ void kernel_early(struct multiboot_info* mb) {
 	gdt_install();
 	idt_install();
 	timer_install();
-	keyboard_install();
 	phys_memory_init(mb);
 	virt_memory_init();
 	kernel_heap_init();
+	keyboard_install();
 	enable_interrupts();
 }
 
 void kernel_main(void) {
+	for (int i = 0; i < 1000000000; i++) {
+		kmalloc(4096);
+	}
 	print_logo();
 	terminal_writestring("> ");
 

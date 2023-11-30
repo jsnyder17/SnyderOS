@@ -118,7 +118,7 @@ void terminal_clear() {
 }
 
 void terminal_enter() {
-	unsigned char input_str[INT_VGA_WIDTH - INT_COLUMN_START_INDEX];
+	char input_str[INT_VGA_WIDTH - INT_COLUMN_START_INDEX];
 
 	// Get the input typed
 	size_t i, j;

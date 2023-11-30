@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-
-#include <external/multiboot.h>
 #include <libk/phys_mem.h>
 
 // Functions to manipulate the bitmap
@@ -22,6 +20,12 @@ int find_free_block() {
   for (uint32_t i = 0; i < total_blocks_; i++) {
     uint32_t block = phys_memory_map_[i];
     if (block != 0xFFFFFFFF) {
+      /*
+      int ret;
+      __asm__ ("bsf " : "+r"(ret) : "r"(block));
+      return ret;
+      */
+      
       for (uint8_t j = 0; j < 32; j++) {
         int bit = 1 << j;
         if (!(bit & block)) {
@@ -173,9 +177,7 @@ void phys_memory_init(struct multiboot_info* mb) {
   kernel_phys_map_start = (uint32_t)phys_memory_map_;
   kernel_phys_map_end =
       kernel_phys_map_start + (total_blocks_ / PHYS_BLOCKS_PER_BYTE);
-  printf("Phys memory manager installed. start: %x, end: %x\n",
-         kernel_phys_map_start, kernel_phys_map_end);
-  printf("Total blocks: %d\n", total_blocks_);
+  printf("Physical memory range %x -> %x with %d total blocks\n", kernel_phys_map_start, kernel_phys_map_end, total_blocks_);
 }
 
 void update_map_addr(physical_addr addr) { phys_memory_map_ = (uint32_t*)addr; }
