@@ -78,7 +78,7 @@ physical_addr alloc_block() {
 
   } else {
     // In the event that all of the blocks are used, just free the last block
-    free_block = (32 * total_blocks_) + 31;
+    free_block = 32 * total_blocks_;
     used_blocks_--;
   }
 
