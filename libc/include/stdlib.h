@@ -11,6 +11,7 @@ __attribute__((__noreturn__))
 void abort(void);
 
 int atoi(const char *str);
+int rand(long seed);
 
 #ifdef __cplusplus
 }

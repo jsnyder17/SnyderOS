@@ -68,13 +68,18 @@ int find_free_blocks(uint32_t count) {
 
 // Functions to manage a single block in memory
 physical_addr alloc_block() {
-  if (total_blocks_ - used_blocks_ <= 0) {
-    return 0;
-  }
+  int free_block = 0;
 
-  int free_block = find_free_block();
-  if (free_block == -1) {
-    return 0;
+  if (total_blocks_ - used_blocks_ > 0) {
+    free_block = find_free_block();
+    //if (free_block == -1) {
+      //return 0;
+    //}
+
+  } else {
+    // In the event that all of the blocks are used, just free the last block
+    free_block = (32 * total_blocks_) + 31;
+    used_blocks_--;
   }
 
   map_set(free_block);

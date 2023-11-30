@@ -5,9 +5,10 @@
 
 bool alloc_page(virtual_addr vaddr) {
     physical_addr paddr = alloc_block();
-    if (!paddr) {
-      return false;
-    }
+    //if (!paddr) {
+      //return false;
+    //}
+    free_page(vaddr);
     map_page(paddr, vaddr);
     return true;
 }

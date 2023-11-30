@@ -24,9 +24,6 @@ void kernel_early(struct multiboot_info* mb) {
 }
 
 void kernel_main(void) {
-	for (int i = 0; i < 1000000000; i++) {
-		kmalloc(4096);
-	}
 	print_logo();
 	terminal_writestring("> ");
 
